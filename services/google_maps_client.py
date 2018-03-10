@@ -27,8 +27,8 @@ class MapClient:
 
     def get_distance_matrix(self, start, end, arrival_time):
         details = self.client.distance_matrix(
-            origins=[s['address'] for s in start],
-            destinations=[e['address'] for e in end],
+            origins=[s['address'] for s in start if 'address' in s],
+            destinations=[e['address'] for e in end if 'address' in e],
             mode='transit',
             units='imperial',
             arrival_time=arrival_time,

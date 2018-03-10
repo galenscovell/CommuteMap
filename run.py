@@ -12,7 +12,7 @@ from datetime import datetime
 
 import util.constants as constants
 
-from graphics.Visualizer import Visualizer
+from graphics.visualizer import Visualizer
 from services.google_maps_client import MapClient
 
 
@@ -52,18 +52,9 @@ if __name__ == '__main__':
 
     # Fill in origins and destinations as detailed Locations
     origins = fill_locations(params['origins'], map_client)
-    print(origins)
     destinations = fill_locations(params['destinations'], map_client)
-    print(destinations)
 
     # Calculate distance matrix between origins and destinations
     distance_matrix = map_client.get_distance_matrix(origins, destinations, params['arrival_time'])
-    print(distance_matrix)
 
-    # Find focus location and draw graphics
-    focus_location = map_client.find_location_details(params['map_focus'])
-    print(focus_location)
-    mapper = Visualizer(focus_location)
-
-    # TODO: Associate distance START and END values with initial Locations to get coordinates and boundaries
-    # Throw these into a chart somehow
+    mapper = Visualizer(origins, destinations, distance_matrix)

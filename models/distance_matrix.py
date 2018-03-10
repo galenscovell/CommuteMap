@@ -14,4 +14,4 @@ class DistanceMatrix(dict):
 
         elements = row['elements'][0]
         self['distance'] = elements['distance']['text']
-        self['duration'] = elements['duration']['value']
+        self['duration'] = int(elements['duration']['value'])

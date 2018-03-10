@@ -1,10 +1,20 @@
 {
   "arrival_time": "03/12/18 9:30",
-  "map_focus": "Seattle",
   "origins": [
     "Shoreline, WA",
-    "West Seattle",
-    "Wallingford, Seattle"
+    "Burien, Seattle",
+    "Wallingford, Seattle",
+    "Magnolia, Seattle",
+    "Ballard, Seattle",
+    "Laurelhurst, Seattle",
+    "Beacon Hill, Seattle",
+    "Ravenna, Seattle",
+    "Alki, Seattle",
+    "4540 42nd Avenue SW, Seattle",
+    "Fremont, Seattle",
+    "Madison Park, Seattle",
+    "Madrona, Seattle",
+    "Queen Anne, Seattle"
   ],
   "destinations": [
     "1000 1st Ave S, Seattle, WA"
