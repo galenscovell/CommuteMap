@@ -1,0 +1,11 @@
+Commute Heatmap
+
+1) Use google maps api to do the following:
+    * Send in a location and destination, return average commute time by bus for a given arrival time
+    * Send in multiple locations and a single destination, return the above per location
+    * Send in a location and multiple destinations, return the above per destination
+2) Create heatmap
+    * Draw empty map with no boundaries
+    * Place labeled points on map for each location/destination based on coordinates
+    * Color points based on commute time
+    * Color regions around points based on region area

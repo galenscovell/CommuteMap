@@ -1,0 +1,11 @@
+{
+    "type": "multiple-to-destination",
+    "arrival_time": "03/12/18 9:30",
+    "start": [
+        "Shoreline, WA",
+        "West Seattle"
+    ],
+    "end": [
+        "1000 1st Ave S, Seattle, WA"
+    ]
+}
