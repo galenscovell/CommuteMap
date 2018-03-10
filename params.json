@@ -1,11 +1,12 @@
 {
-    "type": "multiple-to-destination",
-    "arrival_time": "03/12/18 9:30",
-    "start": [
-        "Shoreline, WA",
-        "West Seattle"
-    ],
-    "end": [
-        "1000 1st Ave S, Seattle, WA"
-    ]
+  "arrival_time": "03/12/18 9:30",
+  "map_focus": "Seattle",
+  "origins": [
+    "Shoreline, WA",
+    "West Seattle",
+    "Wallingford, Seattle"
+  ],
+  "destinations": [
+    "1000 1st Ave S, Seattle, WA"
+  ]
 }

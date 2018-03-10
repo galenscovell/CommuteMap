@@ -5,13 +5,13 @@ Defines a Distance containing search terms and travel distance/time.
 """
 
 
-class Distance(dict):
+class DistanceMatrix(dict):
     def __init__(self, origin, destination, row):
-        super(Distance, self).__init__()
+        super(DistanceMatrix, self).__init__()
 
         self['start'] = origin
         self['end'] = destination
 
         elements = row['elements'][0]
         self['distance'] = elements['distance']['text']
-        self['duration'] = elements['duration']['text']
+        self['duration'] = elements['duration']['value']

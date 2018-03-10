@@ -1,21 +1,19 @@
 """
+Entrypoint for commute map tool.
 
+Fill in `params.json` with desired values, then run `python run.py`
 
 @Author GalenS <galen.scovell@gmail.com>
 """
 
-import googlemaps
 import json
 
 from datetime import datetime
 
 import util.constants as constants
 
-from models.distance import Distance
-from models.location import Location
-
-
-distance_api_key = 'AIzaSyAoo39xmVMOA6K90WzGNF_se9eKpuw0VG8'
+from graphics.Visualizer import Visualizer
+from services.google_maps_client import MapClient
 
 
 def extract_params():
@@ -27,60 +25,45 @@ def extract_params():
     return p
 
 
+def fill_locations(location_list, client):
+    locations = []
+    for l in location_list:
+        locations.append(client.find_location_details(l))
+
+    return locations
+
+
 def create_google_maps_client():
-    return googlemaps.Client(key=distance_api_key)
-
-
-def get_location_details(client, location_string):
-    details = client.geocode(location_string)
-    return Location(details[0])
-
-
-def get_transit_time_between_points(client, start, end, arrival_time):
-    details = client.distance_matrix(
-        origins=[s['address'] for s in start],
-        destinations=[e['address'] for e in end],
-        mode='transit',
-        units='imperial',
-        arrival_time=arrival_time,
-        traffic_model='best_guess',
-        transit_routing_preference='fewer_transfers'
-    )
-
-    origins = details['origin_addresses']
-    destinations = details['destination_addresses']
-    result_rows = details['rows']
-
-    distances = []
-    if len(origins) > 1:
-        # Multiple origins
-        for x in range(0, len(origins)):
-            distances.append(Distance(origins[x], destinations[0], result_rows[x]))
-    else:
-        # Multiple destinations
-        for x in range(0, len(destinations)):
-            distances.append(Distance(origins[0], destinations[x], result_rows[x]))
-
-    return distances
+    client = None
+    try:
+        client = MapClient()
+    except Exception as ex:
+        print('Unable to generate map client - {0}'.format(ex))
+        client = None
+    finally:
+        return client
 
 
 if __name__ == '__main__':
     params = extract_params()
+    print('Arrive by: {0}'.format(params['arrival_time']))
+
     map_client = create_google_maps_client()
 
-    start_locations = []
-    for l in params['start']:
-        start_locations.append(get_location_details(map_client, l))
+    # Fill in origins and destinations as detailed Locations
+    origins = fill_locations(params['origins'], map_client)
+    print(origins)
+    destinations = fill_locations(params['destinations'], map_client)
+    print(destinations)
 
-    end_locations = []
-    for l in params['end']:
-        end_locations.append(get_location_details(map_client, l))
+    # Calculate distance matrix between origins and destinations
+    distance_matrix = map_client.get_distance_matrix(origins, destinations, params['arrival_time'])
+    print(distance_matrix)
 
-    print(start_locations)
-    print(end_locations)
-    print(params['arrival_time'])
-
-    print(get_transit_time_between_points(map_client, start_locations, end_locations, params['arrival_time']))
+    # Find focus location and draw graphics
+    focus_location = map_client.find_location_details(params['map_focus'])
+    print(focus_location)
+    mapper = Visualizer(focus_location)
 
     # TODO: Associate distance START and END values with initial Locations to get coordinates and boundaries
     # Throw these into a chart somehow
